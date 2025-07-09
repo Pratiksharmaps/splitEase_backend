@@ -6,8 +6,6 @@ module.exports = (sequelize)=>{
 
     class Group extends Model{
 
-
-
     }
 
 Group.init({
