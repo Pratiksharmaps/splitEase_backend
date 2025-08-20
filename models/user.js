@@ -34,7 +34,6 @@ module.exports = (sequelize) => {
       allowNull: true,
     },
 mobile: {
-
   type:DataTypes.STRING,
   allowNull: true,
   unique : true,
@@ -50,6 +49,10 @@ email:{
   validate:{
     isEmail:true,
   }
+},
+profilePicUrl:{
+  type: DataTypes.STRING,
+  allowNull:true,
 },
     password: {
       type: DataTypes.STRING,
@@ -74,7 +77,7 @@ email:{
     type: DataTypes.DATE,
   },
 
-    verified: {
+  verified: {
   type: DataTypes.BOOLEAN,
   defaultValue: false,
 },

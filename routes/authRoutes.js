@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {signUp, verifyOtp,login,forgotPassword,resetPassword} = require('../controllers/authController.js');
 
-
+// const authMiddleWare = require('../middlewares/auth_middleware.js')
 
 
 
