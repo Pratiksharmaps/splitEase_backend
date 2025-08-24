@@ -48,7 +48,7 @@ return res.json({message:'SignUp Successful, Check your email and verify your Em
 const verifyOtp = async(req,res)=>{
 const {email, otp}=req.body;
 
-if(email === 'test@gmail.com' && otp === '1234'){
+if(email === 'test@gmail.com' && otp === '123456'){
   const token = jwt.sign({id:123, email: req.email},process.env.JWT_SECRET,{expiresIn:'1h'});
 
   return res.status(200).json({
