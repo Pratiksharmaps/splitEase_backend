@@ -20,10 +20,10 @@ sequelize.authenticate()
   .catch(err => console.error('❌ DB connection failed:', err));
 
 const db = {};
-db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 // Example model
 db.User = require('./user.js')(sequelize, Sequelize);
+db.Group = require('./group.js')(sequelize, Sequelize);
 
 module.exports = db;

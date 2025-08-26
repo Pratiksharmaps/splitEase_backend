@@ -1,26 +1,48 @@
-const {Model , DataTypes} = require('sequelize');
-const { sequelize } = require('.');
+const { Model, DataTypes } = require('sequelize');
 
-module.exports = (sequelize)=>{
+module.exports = (sequelize) => {
+  class Group extends Model {
+    static associate(models) {
+      // Example: A group is created by a user
+      Group.belongsTo(models.User, { foreignKey: 'createdBy', as: 'creator' });
 
-
-    class Group extends Model{
-
+      // Example: A group has many expenses (if you track spending separately)
+      // Group.hasMany(models.Expense, { foreignKey: 'groupId', as: 'expenses' });
     }
+  }
 
-Group.init({
-    id:{
+  Group.init(
+    {
+      id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-        unique:true,
-    },
-    name:{
+        unique: true,
+      },
+      groupName: {
         type: DataTypes.STRING,
-        allowNull:false,
+        allowNull: false,
+      },
+      participants: {
+        type: DataTypes.ARRAY(DataTypes.UUID), // array of user IDs
+        allowNull: false,
+        defaultValue: [],
+      },
+      createdBy: {
+        type: DataTypes.UUID,
+        allowNull: false,
+      },
+      totalAmountSpend: {
+        type: DataTypes.DOUBLE,
+        defaultValue: 0,
+      },
     },
-    participants:{
-type: DataTypes.ARRAY,
+    {
+      sequelize,
+      modelName: 'Group',
+      tableName: 'groups',
     }
-})
-}
+  );
+
+  return Group;
+};

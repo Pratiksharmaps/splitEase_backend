@@ -49,14 +49,17 @@ const verifyOtp = async(req,res)=>{
 const {email, otp}=req.body;
 
 if(email === 'test@gmail.com' && otp === '123456'){
-  const token = jwt.sign({id:123, email: req.email},process.env.JWT_SECRET,{expiresIn:'1h'});
+  const user = await User.findOne({ where: { email } });
+
+  const token = jwt.sign({id:user.id, email: user.email},process.env.JWT_SECRET,{expiresIn:'1h'});
+
 
   return res.status(200).json({
     message: 'OTP Verified Successfully!',
     token: token,
   }); 
 }
-  
+   
 
 try {
   const user = await User.findOne({ where: { email } });
@@ -140,7 +143,7 @@ message:" OTP Sent to your email!"
 
   });
 }catch(e){
- return res.status(500).json({
+ return res.status(500).json({ 
     error:"Server Error",
   });
 }
