@@ -25,5 +25,19 @@ db.sequelize = sequelize;
 // Example model
 db.User = require('./user.js')(sequelize, Sequelize);
 db.Group = require('./group.js')(sequelize, Sequelize);
+db.Expense = require('./expense.js')(
+  sequelize, Sequelize
+); 
 
+// ⚡ Call associations here
+if (db.User.associate) {
+  db.User.associate(db);
+}
+if (db.Group.associate) {
+  db.Group.associate(db);
+}
+if (db.Expense.associate) {
+  db.Expense.associate(db);
+}
+ 
 module.exports = db;

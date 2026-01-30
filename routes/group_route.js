@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {createGroup} = require('../controllers/groupController');
+const {createGroup,getUserGroups,getGroupUsers, addUserToGroup} = require('../controllers/groupController');
 const authMiddleware= require('../middlewares/auth_middleware');
 
 router.get('/', (req, res) => {
@@ -8,6 +8,17 @@ router.get('/', (req, res) => {
 });      
 
 // ----------create-Group-Api
-router.post('/createGroup',authMiddleware  ,createGroup); 
+router.post('/createGroup',authMiddleware ,createGroup);
+ 
+// ---------get-Users_group----------
+router.get('/getUserGroups',authMiddleware,getUserGroups);
+
+// ----Add User to Group ------
+router.post('/addUser',authMiddleware,addUserToGroup);
+
+
+// ----Get Group Users
+router.post('/getGroupUsers',authMiddleware,getGroupUsers);
 
 module.exports = router; 
+ 

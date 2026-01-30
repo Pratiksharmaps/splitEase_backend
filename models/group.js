@@ -1,14 +1,25 @@
+'use strict';
 const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   class Group extends Model {
     static associate(models) {
-      // Example: A group is created by a user
-      Group.belongsTo(models.User, { foreignKey: 'createdBy', as: 'creator' });
+      // Many-to-many: A group can have many users
+      Group.belongsToMany(models.User, {
+        through: 'UserGroups',      // join table
+        foreignKey: 'groupId',
+        otherKey: 'userId'
+      });
 
-      // Example: A group has many expenses (if you track spending separately)
-      // Group.hasMany(models.Expense, { foreignKey: 'groupId', as: 'expenses' });
+      // A group is created by a single user
+      Group.belongsTo(models.User, {
+        foreignKey: 'createdBy',
+        as: 'creator'
+      });
+
+Group.hasMany(models.Expense, { foreignKey: "groupId", as: "expenses" });
     }
+    
   }
 
   Group.init(
@@ -17,17 +28,12 @@ module.exports = (sequelize) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-        unique: true,
       },
       groupName: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      participants: {
-        type: DataTypes.ARRAY(DataTypes.UUID), // array of user IDs
-        allowNull: false,
-        defaultValue: [],
-      },
+      groupImage: DataTypes.STRING,
       createdBy: {
         type: DataTypes.UUID,
         allowNull: false,
