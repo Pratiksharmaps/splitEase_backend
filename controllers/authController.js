@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const db = require('../models');
 const { User } = db;
@@ -48,10 +48,10 @@ return res.json({message:'SignUp Successful, Check your email and verify your Em
 const verifyOtp = async(req,res)=>{
 const {email, otp}=req.body;
 
-if(email === 'test@gmail.com' && otp === '123456'){
+if(email === 'test@gmail.com'||'pratik@gmail.com' && otp === '123456'){
   const user = await User.findOne({ where: { email } });
 
-  const token = jwt.sign({id:user.id, email: user.email},process.env.JWT_SECRET,{expiresIn:'1h'});
+  const token = jwt.sign({id:user.id, email: user.email},process.env.JWT_SECRET,{expiresIn:'1D'});
 
 
   return res.status(200).json({

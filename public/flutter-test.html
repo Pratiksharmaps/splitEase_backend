@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flutter WebView Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+        }
+        #output {
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 1px solid #ccc;
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Flutter WebView Test Page</h1>
+    <p>This page listens for data sent from Flutter via <code>window.onData</code>.</p>
+
+    <div id="output">No data received yet.</div>
+
+    <script>
+        // Define the global function that Flutter will call
+        window.onData = (data) => {
+            try {
+                // Parse JSON if it's a string
+                const parsed = typeof data === 'string' ? JSON.parse(data) : data;
+                const output = document.getElementById('output');
+                output.textContent = `Received from Flutter: ${JSON.stringify(parsed)}`;
+                console.log('Data from Flutter:', parsed);
+            } catch (err) {
+                console.error('Failed to parse data from Flutter:', err);
+            }
+        };
+    </script>
+</body>
+</html>
